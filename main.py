@@ -56,6 +56,13 @@ CATEGORIES = {
 }
 
 def load_config(config_path, console):
+    config_dir = os.path.dirname(config_path)
+    if config_dir and not os.path.exists(config_dir):
+        try:
+            os.makedirs(config_dir)
+        except OSError:
+            console.print(f"[bold red]Warning:[/bold red] Could not create config directory at '[cyan]{config_dir}[/cyan]'.", style="yellow")
+
     if not os.path.exists(config_path):
         try:
             with open(config_path, 'w', encoding='utf-8') as f:
@@ -80,7 +87,7 @@ def get_ip_info(ip_address, fields_to_request=None):
     base_url = f"http://ip-api.com/json/{ip_address}"
     params = {}
     if fields_to_request:
-        fields = [f for f in fields_to_request if f not in ["status", "message", "query"]]
+        fields = [f for f in fields_to_request if f not in ["status", "message"]]
         if fields:
             params['fields'] = ",".join(fields)
             
@@ -404,7 +411,9 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter
     )
     parser.add_argument('ip', nargs='*', default=[], help='IP address(es) to look up. Your own by default.')
-    parser.add_argument('--config', default='config.json', help='Path to a custom config file. Default is config.json.')
+    
+    default_config_path = os.path.join(os.path.expanduser('~'), '.config', 'whatsip', 'config.json')
+    parser.add_argument('--config', default=default_config_path, help=f'Path to a custom config file. Default is {default_config_path}')
     
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-f', '--fields', help='Comma-separated list of fields to display (e.g., "city,isp,lat,lon").')
