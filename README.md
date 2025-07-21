@@ -10,13 +10,17 @@ A stylish command-line utility for IP address lookups.
 
 ```bash
 # Installation
+git clone https://github.com/venterum/WhatSIP.git
+cd WhatSIP
 chmod +x install.sh
 ./install.sh
+
+# Or just install everything in one command:
+git clone https://github.com/venterum/WhatSIP.git && cd WhatSIP && chmod +x install.sh && ./install.sh
 
 # Usage (in a new terminal)
 whatsip 8.8.8.8
 ```
-
 ### Windows (PowerShell)
 
 ```powershell
@@ -25,13 +29,18 @@ whatsip 8.8.8.8
 # Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
 # Installation (in regular PowerShell):
+git clone https://github.com/venterum/WhatSIP.git
+cd WhatSIP
 .\install.ps1
+
+# Or install everything in one command:
+git clone https://github.com/venterum/WhatSIP.git && cd WhatSIP && .\install.ps1
 
 # Usage (in a new PowerShell or CMD terminal):
 whatsip 8.8.8.8
 ```
 
-The default theme can be changed in the `config.json` file.
+The default theme can be changed in the `config.json` file stored in the `/Appdata/Local/whatsip`.
 
 ## Display Themes
 
