@@ -55,6 +55,15 @@ CATEGORIES = {
     "Details": ["currency", "mobile", "proxy", "hosting"]
 }
 
+def get_config_dir():
+    """Возвращает путь к директории конфигурации в зависимости от ОС."""
+    if sys.platform == "win32":
+        # Для Windows: %LOCALAPPDATA%\whatsip
+        return os.path.join(os.getenv('LOCALAPPDATA'), 'whatsip')
+    else:
+        # Для Linux, macOS: ~/.config/whatsip
+        return os.path.join(os.path.expanduser('~'), '.config', 'whatsip')
+
 def load_config(config_path, console):
     config_dir = os.path.dirname(config_path)
     if config_dir and not os.path.exists(config_dir):
@@ -412,7 +421,8 @@ def main():
     )
     parser.add_argument('ip', nargs='*', default=[], help='IP address(es) to look up. Your own by default.')
     
-    default_config_path = os.path.join(os.path.expanduser('~'), '.config', 'whatsip', 'config.json')
+    config_dir = get_config_dir()
+    default_config_path = os.path.join(config_dir, 'config.json')
     parser.add_argument('--config', default=default_config_path, help=f'Path to a custom config file. Default is {default_config_path}')
     
     group = parser.add_mutually_exclusive_group()
