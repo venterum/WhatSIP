@@ -56,12 +56,10 @@ CATEGORIES = {
 }
 
 def get_config_dir():
-    """Возвращает путь к директории конфигурации в зависимости от ОС."""
+    """Returns the path to the configuration directory depending on the OS."""
     if sys.platform == "win32":
-        # Для Windows: %LOCALAPPDATA%\whatsip
         return os.path.join(os.getenv('LOCALAPPDATA'), 'whatsip')
     else:
-        # Для Linux, macOS: ~/.config/whatsip
         return os.path.join(os.path.expanduser('~'), '.config', 'whatsip')
 
 def load_config(config_path, console):
@@ -103,7 +101,13 @@ def get_ip_info(ip_address, fields_to_request=None):
     try:
         response = requests.get(base_url, params=params, timeout=5)
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        # Если IP не был указан, используем полученный IP как отображаемый
+        if not ip_address and data.get("status") == "success":
+            data["display_ip"] = data.get("query", "Unknown")
+        else:
+            data["display_ip"] = ip_address or data.get("query", "Unknown")
+        return data
     except requests.exceptions.RequestException as e:
         return {"status": "fail", "message": str(e)}
 
@@ -151,7 +155,7 @@ def display_sleek(data, config, fields_to_show, console):
         if field in data:
             table.add_row(field.capitalize(), str(data[field]))
     
-    panel_title = f"Information for [bold]{data.get('query', 'N/A')}[/bold]"
+    panel_title = f"Information for [bold]{data.get('display_ip', 'N/A')}[/bold]"
     console.print(
         Panel(
             table,
@@ -179,7 +183,7 @@ def display_dashboard(data, config, fields_to_show, console):
     if 'all' in current_fields:
         current_fields = [key for key in data if key != "status"]
 
-    console.print(Panel(f"[bold]Information for {data.get('query', 'N/A')}[/bold]", expand=False, border_style=style.get("panel_border", "blue")))
+    console.print(Panel(f"[bold]Information for {data.get('display_ip', 'N/A')}[/bold]", expand=False, border_style=style.get("panel_border", "blue")))
 
     panels = []
     
@@ -222,7 +226,7 @@ def display_compact(data, config, fields_to_show, console):
         current_fields = [key for key in data if key != "status"]
 
     text = Text()
-    query = data.get('query', 'N/A')
+    query = data.get('display_ip', 'N/A')
     text.append(f"IP: {query}", style="bold")
 
     for field in current_fields:
@@ -242,7 +246,7 @@ def display_grid(data, config, fields_to_show, console):
     if 'all' in current_fields:
         current_fields = [key for key in data if key != "status"]
 
-    table = Table(box=ROUNDED, show_header=True, header_style=style.get("header", "bold white on blue"), title=f"Information for [bold]{data.get('query', 'N/A')}[/bold]")
+    table = Table(box=ROUNDED, show_header=True, header_style=style.get("header", "bold white on blue"), title=f"Information for [bold]{data.get('display_ip', 'N/A')}[/bold]")
     table.add_column("Category", style="bold", no_wrap=True)
     table.add_column("Field", style=style.get("field_name", "cyan"))
     table.add_column("Value", style=style.get("field_value", "white"))
@@ -278,7 +282,7 @@ def generate_markdown_string(data, config, fields_to_show):
     if 'all' in current_fields:
         current_fields = [key for key in data if key != "status"]
 
-    markdown_string = f"# IP Information for {data.get('query', 'N/A')}\n\n"
+    markdown_string = f"# IP Information for {data.get('display_ip', 'N/A')}\n\n"
     processed_fields = set()
 
     for cat_name, cat_fields in CATEGORIES.items():
@@ -312,7 +316,7 @@ def display_minimal(data, config, fields_to_show, console):
     if 'all' in current_fields:
         current_fields = [key for key in data if key != "status"]
 
-    console.print(f"--- IP Information for [bold]{data.get('query', 'N/A')}[/bold] ---")
+    console.print(f"--- IP Information for [bold]{data.get('display_ip', 'N/A')}[/bold] ---")
 
     for field in current_fields:
         if field in data:
@@ -329,7 +333,7 @@ def display_tree(data, config, fields_to_show, console):
         current_fields = [key for key in data if key != "status"]
 
     tree = Tree(
-        f"IP Information for [bold]{data.get('query', 'N/A')}[/bold]",
+        f"IP Information for [bold]{data.get('display_ip', 'N/A')}[/bold]",
         guide_style=style.get("panel_border", "blue")
     )
 
@@ -396,7 +400,7 @@ def save_output(results, filename, config, fields_to_show, console):
             else:
                 text_content = ""
                 for data in results:
-                    text_content += f"--- IP Information for {data.get('query', 'N/A')} ---\n"
+                    text_content += f"--- IP Information for {data.get('display_ip', 'N/A')} ---\n"
                     
                     current_fields = fields_to_show
                     if not current_fields:

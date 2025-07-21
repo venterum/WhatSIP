@@ -1,44 +1,56 @@
 # WhatSIP
 
-[🇷🇺 На русском языке](README_RU.md)
 
-A stylish command-line utility for IP address lookups.
+```
+ ___       __   ___  ___  ________  _________  ________  ___  ________   
+|\  \     |\  \|\  \|\  \|\   __  \|\___   ___\\   ____\|\  \|\   __  \  
+\ \  \    \ \  \ \  \\\  \ \  \|\  \|___ \  \_\ \  \___|\ \  \ \  \|\  \ 
+ \ \  \  __\ \  \ \   __  \ \   __  \   \ \  \ \ \_____  \ \  \ \   ____\
+  \ \  \|\__\_\  \ \  \ \  \ \  \ \  \   \ \  \ \|____|\  \ \  \ \  \___|
+   \ \____________\ \__\ \__\ \__\ \__\   \ \__\  ____\_\  \ \__\ \__\   
+    \|____________|\|__|\|__|\|__|\|__|    \|__| |\_________\|__|\|__|   
+                                                 \|_________|                        
+```
 
-## Usage
+Стильная утилита для поиска информации о IP-адресах или просмотра информации о своём.
+
+## Использование
 
 ### Linux / macOS
 
 ```bash
-# Installation
+# Установка
 chmod +x install.sh
 ./install.sh
 
-# Usage (in a new terminal)
+# Использование (в новом терминале)
 whatsip 8.8.8.8
 ```
 
 ### Windows (PowerShell)
 
 ```powershell
-# First-time script execution might require changing the execution policy.
-# Run PowerShell as Administrator and execute:
+# При первом запуске скриптов может потребоваться изменить политику выполнения.
+# Запустите PowerShell от имени администратора и выполните:
 # Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 
-# Installation (in regular PowerShell):
+# Установка (в обычном PowerShell):
 .\install.ps1
 
-# Usage (in a new PowerShell or CMD terminal):
+# Использование (в новом терминале PowerShell или CMD):
 whatsip 8.8.8.8
 ```
 
-The default theme can be changed in the `config.json` file.
+Тема по умолчанию изменяется в файле `config.json`.
 
-## Display Themes
+## Темы оформления
 
-Examples for the command `whatsip 8.8.8.8 -f country,city,isp,query`.
+Примеры для команды `whatsip 8.8.8.8 -f country,city,isp,query`.
 
-### `sleek` (default)
-Elegant panel with a table.
+---
+
+### `sleek` (по умолчанию)
+Элегантная панель с таблицей.
 
 ```text
 ┌─ Information for 8.8.8.8 ───────────┐
@@ -56,7 +68,7 @@ Elegant panel with a table.
 ---
 
 ### `dashboard`
-The data is grouped to several panels.
+Данные сгруппированы в несколько панелей.
 
 ```text
 ┌─ Information for 8.8.8.8 ──────────────────────────────────┐
@@ -71,7 +83,7 @@ The data is grouped to several panels.
 ---
 
 ### `grid`
-A table with categories.
+Таблица с категориями.
 
 ```text
 ┌───────── Information for 8.8.8.8 ──────────┐
@@ -87,7 +99,7 @@ A table with categories.
 ---
 
 ### `tree`
-Tree-like.
+Иерархическое представление данных.
 
 ```text
 IP Information for 8.8.8.8
@@ -103,7 +115,7 @@ IP Information for 8.8.8.8
 ---
 
 ### `minimal`
-"Key: String".
+Простой вывод вида "Ключ: Значение".
 
 ```text
 --- IP Information for 8.8.8.8 ---
@@ -116,7 +128,7 @@ Query: 8.8.8.8
 ---
 
 ### `compact`
-Everything in one line.
+Вся информация в одной строке.
 
 ```text
 IP: 8.8.8.8 | Country: United States | City: Mountain View | Isp: Google LLC
@@ -125,7 +137,7 @@ IP: 8.8.8.8 | Country: United States | City: Mountain View | Isp: Google LLC
 ---
 
 ### `json`
-JSON output.
+Вывод в формате JSON.
 
 ```json
 {
@@ -139,7 +151,7 @@ JSON output.
 ---
 
 ### `markdown`
-Markdown output.
+Вывод в формате Markdown.
 
 ```markdown
 # IP Information for 8.8.8.8
