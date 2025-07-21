@@ -4,15 +4,29 @@
 
 ## Использование
 
+### Linux / macOS
+
 ```bash
-# Информация о вашем IP
-python main.py
+# Установка
+chmod +x install.sh
+./install.sh
 
-# Информация о конкретном IP или домене
-python main.py 8.8.8.8
+# Использование (в новом терминале)
+whatsip 8.8.8.8
+```
 
-# Показать все поля и сохранить в файл
-python main.py 8.8.8.8 -a -o info.json
+### Windows (PowerShell)
+
+```powershell
+# При первом запуске скриптов может потребоваться изменить политику выполнения.
+# Запустите PowerShell от имени администратора и выполните:
+# Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+# Установка (в обычном PowerShell):
+.\install.ps1
+
+# Использование (в новом терминале PowerShell или CMD):
+whatsip 8.8.8.8
 ```
 
 Тема по умолчанию изменяется в файле `config.json`.
@@ -139,3 +153,4 @@ IP: 8.8.8.8 | Country: United States | City: Mountain View | Isp: Google LLC
 
 ## Other
 - **Query**: 8.8.8.8
+```
