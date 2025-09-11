@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Цвета и стили
 C_RESET='\033[0m'
 C_BLUE='\033[0;34m'
 C_GREEN='\033[0;32m'
@@ -194,7 +193,7 @@ echo -e " ${C_GREEN}✓${C_RESET}"
 echo -e "\n${C_YELLOW}---[ ${LANG[STEP4]} ]---${C_RESET}"
 
 if [[ ":$PATH:" != *":$INSTALL_DIR:"* ]]; then
-    shell_config_files=("$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile")
+    shell_config_files=("$HOME/.bashrc" "$HOME/.zshrc" "$HOME/.profile" "$HOME/.config/fish/config.fish")
     path_export_line="export PATH=\"\$HOME/.local/bin:\$PATH\""
     for config_file in "${shell_config_files[@]}"; do
         if [ -f "$config_file" ] && ! grep -q "# WhatSIP path" "$config_file"; then
