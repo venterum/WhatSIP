@@ -156,7 +156,7 @@ if ($LASTEXITCODE -ne 0) {
 }
 Write-Host $LANG.DEPS_INSTALLED
 
-Copy-Item "main.py" -Destination $appDir
+Copy-Item -Path @("main.py", "api.py", "config.py", "display.py") -Destination $appDir
 
 $scriptsDir = Join-Path $env:LOCALAPPDATA "Scripts"
 New-Item -ItemType Directory -Force $scriptsDir | Out-Null

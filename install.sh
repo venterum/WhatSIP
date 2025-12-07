@@ -175,7 +175,7 @@ if [ $? -ne 0 ]; then
 fi
 echo -e " ${C_GREEN}✓${C_RESET}"
 
-cp main.py "$APP_DIR/"
+cp main.py api.py config.py display.py "$APP_DIR/"
 
 INSTALL_DIR="$HOME/.local/bin"
 mkdir -p "$INSTALL_DIR"
